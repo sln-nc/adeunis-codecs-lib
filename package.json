@@ -1,10 +1,21 @@
 {
-  "name": "adeunis-codecs",
+  "name": "adeunis-codecs-lib",
   "version": "1.3.0",
   "description": "Adeunis codecs",
   "author": "Adeunis",
-  "private": true,
-  "main": "dist/index.js",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/lib.js",
+  "types": "dist/lib.d.ts",
+  "files": [
+    "/dist/lib*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sln-nc/adeunis-codecs-lib.git"
+  },
   "scripts": {
     "start": "npm run build",
     "test": "npm run build:lib && npm run build:test && cross-env NODE_ENV=test mocha -r dist/lib dist/test/**/*.spec.js",
