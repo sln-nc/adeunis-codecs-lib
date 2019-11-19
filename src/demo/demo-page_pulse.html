@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Demo page PULSE</title>
+</head>
+
+<body>
+<h1>Demo page PULSE</h1>
+<pre data-frame="1020010003920125003c000100020003000400050006"></pre>
+<pre data-frame="102001039a0125003c"></pre>
+<pre data-frame="11400001000200030004"></pre>
+<pre data-frame="128000050006"></pre>
+
+<pre data-frame="30e0150400030002000100"></pre>
+
+<pre data-frame="46800000009f00000002"></pre>
+<pre data-frame="47a00f780000"></pre>
+
+<!--Historic 1h Lora-->
+<pre data-frame="4820000000010000000200000100020003000400050006000700080009000a"></pre>
+<!--Historic 1h SFX-->
+<pre data-frame="4820000000010000000200"></pre>
+<pre data-frame="4820010001000200030004"></pre>
+<pre data-frame="4820020005000600070008"></pre>
+<pre data-frame="4820030009000a"></pre>
+<!--Historic 1d Lora-->
+<pre data-frame="4820000000010000000200000100020003000400050006000700080009000a000b000c000d000e000f00100011001200130014"></pre>
+<pre data-frame="48200100150016001700180019001a001b001c001d001e001f0020002100220023002400250026002700280029002a002b002c"></pre>
+<pre data-frame="482002002d002e"></pre>
+<!--Historic 1d SFX-->
+<pre data-frame="4820000000010000000200"></pre>
+<pre data-frame="4820010001000200030004"></pre>
+<pre data-frame="4820020005000600070008"></pre>
+<pre data-frame="4820030009000a000b000c"></pre>
+<pre data-frame="482004000d000e000f0010"></pre>
+<pre data-frame="4820050011001200130014"></pre>
+<pre data-frame="4820060015001600170018"></pre>
+<pre data-frame="4820070019001a001b001c"></pre>
+<pre data-frame="482008001d001e001f0020"></pre>
+<pre data-frame="4820090021002200230024"></pre>
+<pre data-frame="48200a0025002600270028"></pre>
+<pre data-frame="48200b0029002a002b002c"></pre>
+<pre data-frame="48200c002d002e"></pre>
+
+<script src="../../dist/buffer-custom-shim.js"></script>
+<script src="../../dist/lib.public.js"></script>
+<script>
+    var decoder = new codec.Decoder();
+
+    decoder.setDeviceType("pulse");
+
+    document.querySelectorAll('pre[data-frame]').forEach(pre => {
+        var frameAttr = pre.attributes.getNamedItem('data-frame');
+    if (!frameAttr) {
+        return;
+    }
+
+    var content;
+    try {
+        content = decoder.decode(frameAttr.value);
+    } catch (error) {
+        console.log(error);
+        content = { 'error': error.toString() };
+    }
+    pre.textContent = frameAttr.value + ':\n';
+    pre.textContent += JSON.stringify(content, null, 2);
+    });
+</script>
+</body>
+
+</html>

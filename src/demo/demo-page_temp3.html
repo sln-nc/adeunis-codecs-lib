@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Demo page TEMP 3</title>
+</head>
+
+<body>
+<h1>Demo page TEMP 3</h1>
+<pre data-frame="101021C000030002070800"></pre>
+<pre data-frame="20a00501"></pre>
+<pre data-frame="30E201B3"></pre>
+<pre data-frame="301001B301B2"></pre>
+<pre data-frame="3380040140"></pre>
+<pre data-frame="571001B301B2"></pre>
+<pre data-frame="571080008000"></pre>
+<pre data-frame="570001B3800001B201B1"></pre>
+<pre data-frame="579201B3FF9C01F4FFFF"></pre>
+<pre data-frame="5880010032"></pre>
+<pre data-frame="5890000028020032"></pre>
+<script src="../../dist/buffer-custom-shim.js"></script>
+<script src="../../dist/lib.public.js"></script>
+<script>
+    var decoder = new codec.Decoder();
+
+    decoder.setDeviceType("temp3");
+
+    document.querySelectorAll('pre[data-frame]').forEach(pre => {
+        var frameAttr = pre.attributes.getNamedItem('data-frame');
+    if (!frameAttr) {
+        return;
+    }
+
+    var content;
+    try {
+        content = decoder.decode(frameAttr.value);
+    } catch (error) {
+        console.log(error);
+        content = { 'error': error.toString() };
+    }
+    pre.textContent = frameAttr.value + ':\n';
+    pre.textContent += JSON.stringify(content, null, 2);
+    });
+</script>
+</body>
+
+</html>

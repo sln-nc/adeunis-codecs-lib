@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Demo page ANALOG</title>
+</head>
+
+<body>
+<h1>Demo page ANALOG</h1>
+<pre data-frame="102090061100224101"></pre>
+<pre data-frame="10409006117F00AA02"></pre>
+<pre data-frame="11600A0000000010"></pre>
+<pre data-frame="12800B0000000020"></pre>
+<pre data-frame="13A00C0000000030"></pre>
+<pre data-frame="14C00E0000000040"></pre>
+<pre data-frame="20400501"></pre>
+<pre data-frame="30500110000002100000"></pre>
+<pre data-frame="42480100000000000000"></pre>
+<script src="../../dist/buffer-custom-shim.js"></script>
+<script src="../../dist/lib.public.js"></script>
+<script>
+    var decoder = new codec.Decoder();
+
+    decoder.setDeviceType("analog");
+
+    document.querySelectorAll('pre[data-frame]').forEach(pre => {
+        var frameAttr = pre.attributes.getNamedItem('data-frame');
+    if (!frameAttr) {
+        return;
+    }
+
+    var content;
+    try {
+        content = decoder.decode(frameAttr.value);
+    } catch (error) {
+        console.log(error);
+        content = { 'error': error.toString() };
+    }
+    pre.textContent = frameAttr.value + ':\n';
+    pre.textContent += JSON.stringify(content, null, 2);
+    });
+</script>
+</body>
+
+</html>

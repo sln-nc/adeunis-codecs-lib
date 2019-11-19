@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Demo page TIC CBE/LINKY MONO</title>
+</head>
+
+<body>
+<h1>Demo page TIC CBE/LINKY MONO</h1>
+
+<pre data-frame="1000900001020005"></pre>
+<pre data-frame="20400501"></pre>
+<pre data-frame="494030323137323830333138313948432e2e800000000000002d000000000000000000000000000000000000000048502e2e"></pre>
+<pre data-frame="4930000000000000000000000000000000008000000080000000800000008000000080000000800000008000000000000000"></pre>
+
+<pre data-frame="4aa04144434f00000000000000303231373238303331383139"></pre>
+<script src="../../dist/buffer-custom-shim.js"></script>
+<script src="../../dist/lib.public.js"></script>
+<script>
+    var decoder = new codec.Decoder();
+
+    decoder.setDeviceType("ticCbeLinkyMono");
+
+    document.querySelectorAll('pre[data-frame]').forEach(pre => {
+        var frameAttr = pre.attributes.getNamedItem('data-frame');
+    if (!frameAttr) {
+        return;
+    }
+
+    var content;
+    try {
+        content = decoder.decode(frameAttr.value);
+    } catch (error) {
+        console.log(error);
+        content = { 'error': error.toString() };
+    }
+    pre.textContent = frameAttr.value + ':\n';
+    pre.textContent += JSON.stringify(content, null, 2);
+    });
+</script>
+</body>
+
+</html>
